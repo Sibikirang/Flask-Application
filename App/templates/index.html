@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <title>Namma Kadai - Shop Management</title>
+
+    <style>
+/* Reset some default styles */
+body, h1, h2, h3, p, ul, li, form {
+    margin: 0;
+    padding: 0;
+}
+
+/* Basic styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+header {
+    
+    background-color: #370e51;
+    color: white;
+    padding: 20px;
+    text-align: center;
+
+}
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1, h2 {
+    color: #4285f4;
+}
+
+h2 {
+    margin-top: 20px;
+}
+
+ul {
+    list-style: none;
+    margin-top: 10px;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+section {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+}
+
+select, input[type="number"] {
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #3367d6;
+}
+
+#report {
+    background-color: #f9f9f9;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#report h3 {
+    margin-top: 10px;
+    color: #4285f4;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Namma Kadai - Shop Management</h1>
+        <p>Cash Balance: Rs. <span id="cash-balance">{{ cash_balance }}</span></p>
+    </header>
+    <main>
+        <section id="items">
+            <h2>Items</h2>
+            <ul>
+                {% for item in items %}
+                <li>{{ item.item_name }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        <section id="transactions">
+            <h2>Transactions</h2>
+            <div id="purchase-form">
+                <h3>Purchase</h3>
+                <form action="/purchase" method="post">
+                    <select name="item_id">
+                        {% for item in items %}
+                        <option value="{{ item.item_id }}">{{ item.item_name }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="number" name="qty" placeholder="Quantity" required>
+                    <input type="number" name="rate" placeholder="Rate" required>
+                    <button type="submit">Purchase</button>
+                </form>
+            </div>
+            <div id="sale-form">
+                <h3>Sale</h3>
+                <form action="/sale" method="post">
+                    <select name="item_id">
+                        {% for item in items %}
+                        <option value="{{ item.item_id }}">{{ item.item_name }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="number" name="qty" placeholder="Quantity" required>
+                    <input type="number" name="rate" placeholder="Rate" required>
+                    <button type="submit">Sale</button>
+                </form>
+            </div>
+        </section>
+       <!-- ... previous HTML content ... -->
+
+<section id="report">
+<!-- ... previous HTML content ... -->
+
+<section id="report">
+    <h2>Report</h2>
+    <p>Current Cash Balance: Rs. {{ cash_balance }}</p>
+    <h3>Purchase Transactions</h3>
+    <ul>
+        {% if purchases %}
+        {% for purchase in purchases %}
+        <li>{{ purchase.timestamp }} - {{ purchase.qty }} items of {{ purchase.item_name }} for Rs. {{ purchase.amount }}</li>
+        {% endfor %}
+        {% else %}
+        <li>No purchase transactions</li>
+        {% endif %}
+    </ul>
+    <h3>Sale Transactions</h3>
+    <ul>
+        {% if sales %}
+        {% for sale in sales %}
+        <li>{{ sale.timestamp }} - {{ sale.qty }} items of {{ sale.item_name }} for Rs. {{ sale.amount }}</li>
+        {% endfor %}
+        {% else %}
+        <li>No sale transactions</li>
+        {% endif %}
+    </ul>
+</section>
+
+<!-- ... rest of the HTML content ... -->
+
+
+
+
+    </main>
+    <footer>
+        <p>&copy; 2023 Namma Kadai. All rights reserved.</p>
+    </footer>
+</body>
+</html>
